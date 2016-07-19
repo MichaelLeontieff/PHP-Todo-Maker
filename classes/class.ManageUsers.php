@@ -17,23 +17,23 @@
             return $this->link;
         }
 
-        function RegisterUsers($username, $password, $ip_address, $time, $date) {
-            $query = $this->link->prepare("INSERT INTO todo.users (username, password, ip_address, reg_time, reg_date) 
-                VALUES (?, ?, ?, ?, ?)");
-            $values = array($username, $password, $ip_address, $time, $date);
+        function RegisterUsers($username, $email, $password, $ip_address, $time, $date) {
+            $query = $this->link->prepare("INSERT INTO todo.users (username, email, password, ip_address, reg_time, reg_date) 
+                VALUES (?, ?, ?, ?, ?, ?)");
+            $values = array($username, $email, $password, $ip_address, $time, $date);
             $query->execute($values);
             $counts = $query->rowCount();
             return $counts;
         }
 
         function LoginUsers($username, $password) {
-            $query = $this->link->query("SELECT * FROM users WHERE username = '$username' AND password = '$password'");
+            $query = $this->link->query("SELECT * FROM todo.users WHERE username = '$username' AND password = '$password'");
             $rowcount = $query->rowCount();
             return $rowcount;
         }
 
         function GetUserInfo($username) {
-            $query = $this->link->query("SELECT * FROM users WHERE username = '$username'");
+            $query = $this->link->query("SELECT * FROM todo.users WHERE username = '$username'");
             $rowcount = $query->rowCount();
             if ($rowcount == 1) {
                 $result = $query->fetchAll();
@@ -44,7 +44,5 @@
         }
     }
 
-    $users = new ManageUsers();
-//   echo $users->registerUsers('bob', 'bob', '127.0.0.1', '12:00', '29-02-2012');
 
 ?>
